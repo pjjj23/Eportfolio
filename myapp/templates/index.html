@@ -1,8 +1,10 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
   <title>Bonbon E-Portfolio</title>
   <style>
     body {
@@ -114,6 +116,155 @@
       position: relative;
       overflow: hidden;
     }
+ 
+        #welcome-message {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #fff;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        #subtitle {
+            font-size: 1.2rem;
+            color: #94a3b8;
+            margin-bottom: 3rem;
+            letter-spacing: 1px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 1.25rem;
+            justify-content: left;
+            perspective: 1000px;
+        }
+
+        .social-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: #1e293b;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 
+                        0 2px 4px -1px rgba(0, 0, 0, 0.06),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+        }
+
+        .social-icon::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(45deg, transparent 25%, rgba(255, 255, 255, 0.1) 50%, transparent 75%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .social-icon:hover::before {
+            transform: translateX(100%);
+        }
+
+        .social-icon i {
+            font-size: 1.25rem;
+            z-index: 2;
+            transition: all 0.4s ease;
+        }
+
+        .social-icon:hover {
+            transform: translateY(-5px) rotateX(10deg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2),
+                        0 10px 10px -5px rgba(0, 0, 0, 0.1),
+                        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+
+        .social-icon:hover i {
+            transform: scale(1.2);
+        }
+
+        /* Brand-specific styling */
+        .facebook {
+            background: linear-gradient(145deg, #1e293b, #1a237e);
+            text-decoration: none;
+        }
+        .facebook i { color: #4267B2; }
+        .facebook:hover { background: #4267B2; }
+        .facebook:hover i { color: white; }
+
+        .instagram {
+            background: linear-gradient(145deg, #1e293b, #833ab4);
+            text-decoration: none;
+        }
+        .instagram i { color: #E1306C; }
+        .instagram:hover {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        }
+        .instagram:hover i { color: white; }
+
+        .github {
+            background: linear-gradient(145deg, #1e293b, #2d333b);
+            text-decoration: none;
+        }
+        .github i { color: #fff; }
+        .github:hover { background: #2d333b; }
+        .github:hover i { color: #fff; }
+
+        .linkedin {
+            background: linear-gradient(145deg, #1e293b, #0077b5);
+            text-decoration: none;
+        }
+        .linkedin i { color: #0077b5; }
+        .linkedin:hover { background: #0077b5; }
+        .linkedin:hover i { color: white; }
+
+        /* Glow effect on hover */
+        .social-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border-radius: 12px;
+        }
+
+        .facebook:hover::after {
+            box-shadow: 0 0 20px rgba(66, 103, 178, 0.5);
+            opacity: 1;
+        }
+
+        .instagram:hover::after {
+            box-shadow: 0 0 20px rgba(225, 48, 108, 0.5);
+            opacity: 1;
+        }
+
+        .github:hover::after {
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            opacity: 1;
+        }
+
+        .linkedin:hover::after {
+            box-shadow: 0 0 20px rgba(0, 119, 181, 0.5);
+            opacity: 1;
+        }
+
+        /* Click effect */
+        .social-icon:active {
+            transform: scale(0.95) translateY(-2px);
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) rotateX(10deg); }
+            50% { transform: translateY(-8px) rotateX(10deg); }
+            100% { transform: translateY(0) rotateX(10deg); }
+        }
+
+        .social-icon:hover {
+            animation: float 1.5s ease-in-out infinite;
+        }
 
     .hero::before {
       content: '';
@@ -145,6 +296,8 @@
       margin-top: 20px;
       color: #666;
     }
+
+    
 
     .about {
       min-height: 100vh;
@@ -191,39 +344,43 @@
     }
 
     .graphic-circle {
-      position: absolute;
-      border-radius: 50%;
-      border: 2px solid #4caf50;
-      animation: rotate 20s linear infinite;
+        position: absolute;
+        border-radius: 50%;
+        border: 3px solid #4caf50;
+        overflow: hidden;
+        width: 350px;    /* Increased size */
+        height: 350px;   /* Increased size */
+        box-shadow: 
+            0 10px 30px rgba(0, 0, 0, 0.2),        /* Outer shadow */
+            0 0 0 15px rgba(76, 175, 80, 0.1),     /* Green glow effect */
+            inset 0 0 20px rgba(0, 0, 0, 0.2);     /* Inner shadow */
+        transition: all 0.3s ease;
     }
 
     .circle-1 {
-      width: 100%;
-      height: 100%;
-      border-color: #4caf50;
+        border-color: #4caf50;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #fff; /* Adding white background */
     }
 
-    .circle-2 {
-      width: 70%;
-      height: 70%;
-      top: 15%;
-      left: 15%;
-      border-color: #45a049;
-      animation-direction: reverse;
+    .circle-1 img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transform: scale(1.02); /* Slightly scale up to avoid any tiny gaps */
     }
 
-    .circle-3 {
-      width: 40%;
-      height: 40%;
-      top: 30%;
-      left: 30%;
-      border-color: #388e3c;
+    /* Optional hover effect */
+    .graphic-circle:hover {
+        box-shadow: 
+            0 15px 40px rgba(0, 0, 0, 0.3),
+            0 0 0 20px rgba(76, 175, 80, 0.15),
+            inset 0 0 25px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
     }
 
-    @keyframes rotate {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
 
     .floating-btn {
       position: fixed;
@@ -889,6 +1046,258 @@
         transform: scale(1.5) rotate(-45deg) translateX(100%);
       }
     }
+
+    .contactme-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(8px);
+            display: none;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1000;
+        }
+
+        .contactme-modal-backdrop.active {
+            display: flex;
+            opacity: 1;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .contactme-modal {
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            width: 95%;
+            max-width: 550px;
+            border-radius: 24px;
+            position: relative;
+            transform: scale(0.7) translateY(50px);
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+            overflow: hidden;
+        }
+
+        .contactme-modal.active {
+            transform: scale(1) translateY(0);
+            opacity: 1;
+        }
+
+        .contactme-modal-header {
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contactme-modal-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E</svg>");
+            opacity: 0.1;
+        }
+
+        .contactme-modal-header h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .contactme-modal-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        .contactme-modal-body {
+            padding: 2rem;
+        }
+
+        .contactme-close-button {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            font-size: 1.25rem;
+            color: white;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .contactme-close-button:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: rotate(90deg);
+        }
+
+        .contactme-form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .contactme-form-label {
+            display: block;
+            color: #4b5563;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contactme-form-label i {
+            color: #6366f1;
+            font-size: 1rem;
+        }
+
+        .contactme-form-input {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: white;
+        }
+
+        .contactme-form-input:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.1);
+        }
+
+        .contactme-form-input::placeholder {
+            color: #9ca3af;
+        }
+
+        textarea.contactme-form-input {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .contactme-submit-button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contactme-submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -10px rgba(99, 102, 241, 0.5);
+        }
+
+        .contactme-submit-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transition: 0.5s;
+        }
+
+        .contactme-submit-button:hover::before {
+            left: 100%;
+        }
+
+        @keyframes contactmeSpin {
+            to { transform: rotate(360deg); }
+        }
+
+        .contactme-submit-button.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .contactme-submit-button.loading::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 50%;
+            left: 50%;
+            margin: -12px 0 0 -12px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: contactmeSpin 0.8s infinite linear;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 640px) {
+            .contactme-modal {
+                width: 90%;
+                margin: 1rem;
+            }
+
+            .contactme-modal-header {
+                padding: 2rem 1.5rem;
+            }
+
+            .contactme-modal-header h2 {
+                font-size: 1.5rem;
+            }
+
+            .contactme-modal-body {
+                padding: 1.5rem;
+            }
+
+            .contactme-form-input {
+                padding: 0.75rem;
+            }
+        }
+
+        /* Input Focus Animation */
+        .contactme-form-group {
+            position: relative;
+        }
+
+        .contactme-form-input:focus + .focus-border {
+            width: 100%;
+            transition: 0.4s;
+            left: 0;
+        }
+
+        .focus-border {
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 2px;
+            background-color: #6366f1;
+            transition: 0.4s;
+        }
   </style>
 </head>
 <body class="dark">
@@ -936,10 +1345,24 @@
 
   <header id="home" class="hero">
     <div class="hero-content">
-      <h1 id="welcome-message">Hi, Philip John Bonbon</h1>
-      <p id="subtitle">Software Engineer & Creative Developer</p>
+        <h1 id="welcome-message">Hi, Philip John Bonbon</h1>
+        <p id="subtitle">Software Engineer & Creative Developer</p>
+        <div class="social-icons">
+            <a href="#" class="social-icon facebook" aria-label="Facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-icon instagram" aria-label="Instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-icon github" aria-label="GitHub">
+                <i class="fab fa-github"></i>
+            </a>
+            <a href="#" class="social-icon linkedin" aria-label="LinkedIn">
+                <i class="fab fa-linkedin-in"></i>
+            </a>
+        </div>
     </div>
-  </header>
+</header>
 
   <section id="about" class="about">
     <div class="about-grid">
@@ -951,9 +1374,9 @@
         </p>
       </div>
       <div class="about-graphic">
-        <div class="graphic-circle circle-1"></div>
-        <div class="graphic-circle circle-2"></div>
-        <div class="graphic-circle circle-3"></div>
+        <div class="graphic-circle circle-1">
+            <img src="https://firebasestorage.googleapis.com/v0/b/ctuacaccreditedboardinghouse.appspot.com/o/default_profileimg%2Fphilip-john-bonbon.jpg?alt=media&token=7a20cdbd-89cf-467b-85f4-b63b5b56475d" alt="philip john bonbon">
+        </div> 
       </div>
     </div>
   </section>
@@ -1051,6 +1474,7 @@
       <path d="M20.01 15.38c-1.23 0-2.42-.2-3.53-.56a.977.977 0 0 0-1.01.24l-1.57 1.97c-2.83-1.35-5.48-3.9-6.89-6.83l1.95-1.66c.27-.28.35-.67.24-1.02c-.37-1.11-.56-2.3-.56-3.53c0-.54-.45-.99-.99-.99H4.19C3.65 3 3 3.24 3 3.99C3 13.28 10.73 21 20.01 21c.71 0 .99-.63.99-1.18v-3.45c0-.54-.45-.99-.99-.99z"/>
     </svg>
   </button>
+
 <!-- Language Modal -->
 <div class="modal-overlay" id="languageModal">
     <div class="modal">
@@ -1064,20 +1488,103 @@
           <div class="lang-code">EN</div>
         </div>
         <div class="language-option" data-lang="es">
-          Español
-          <div class="lang-code">ES</div>
+          Tagalog
+          <div class="lang-code">TG</div>
         </div>
         <div class="language-option" data-lang="fr">
-          Français
-          <div class="lang-code">FR</div>
+          Bisaya
+          <div class="lang-code">BY</div>
         </div>
         <div class="language-option" data-lang="de">
-          Deutsch
-          <div class="lang-code">DE</div>
+          Japanese
+          <div class="lang-code">JP</div>
         </div>
       </div>
     </div>
   </div>
+
+
+  <!-- Modal backdrop for contact me -->
+  <div class="contactme-modal-backdrop">
+    <!-- Modal -->
+    <div class="contactme-modal">
+        <!-- Close button -->
+        <button class="contactme-close-button">
+            <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Modal content -->
+        <div class="contactme-modal-header">
+            <h2>Get in Touch</h2>
+            <p>I'll get back to you as soon as possible</p>
+        </div>
+
+        <div class="contactme-modal-body">
+            <!-- Contact form -->
+            <form id="contactmeForm">
+                <div class="contactme-form-group">
+                    <label class="contactme-form-label" for="contactmeFullname">
+                        <i class="fas fa-user"></i> Full Name
+                    </label>
+                    <input 
+                        type="text" 
+                        id="contactmeFullname" 
+                        class="contactme-form-input" 
+                        placeholder="John Doe"
+                        required
+                    >
+                    <span class="focus-border"></span>
+                </div>
+
+                <div class="contactme-form-group">
+                    <label class="contactme-form-label" for="contactmeEmail">
+                        <i class="fas fa-envelope"></i> Email Address
+                    </label>
+                    <input 
+                        type="email" 
+                        id="contactmeEmail" 
+                        class="contactme-form-input" 
+                        placeholder="john@example.com"
+                        required
+                    >
+                    <span class="focus-border"></span>
+                </div>
+
+                <div class="contactme-form-group">
+                    <label class="contactme-form-label" for="contactmeSubject">
+                        <i class="fas fa-heading"></i> Subject
+                    </label>
+                    <input 
+                        type="text" 
+                        id="contactmeSubject" 
+                        class="contactme-form-input" 
+                        placeholder="How can I help you?"
+                        required
+                    >
+                    <span class="focus-border"></span>
+                </div>
+
+                <div class="contactme-form-group">
+                    <label class="contactme-form-label" for="contactmeMessage">
+                        <i class="fas fa-comment-alt"></i> Message
+                    </label>
+                    <textarea 
+                        id="contactmeMessage" 
+                        class="contactme-form-input" 
+                        placeholder="Your message here..."
+                        required
+                    ></textarea>
+                    <span class="focus-border"></span>
+                </div>
+
+                <button type="submit" class="contactme-submit-button">
+                    Send Message
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
   <script>
     // Language modal
     const modal = document.getElementById("languageModal");
@@ -1086,12 +1593,12 @@
 
     const translations = {
       en: {
-        welcomeMessage: "Hi, I'm John Doe",
+        welcomeMessage: "Hi, Philip John Bonbon",
         subtitle: "Software Engineer & Creative Developer",
         aboutDescription: "Passionate developer with expertise in modern web technologies, creating innovative solutions that blend design and functionality.",
       },
       es: {
-        welcomeMessage: "Hola, soy John Doe",
+        welcomeMessage: "Kumusta, ako pala si Philip John Bonbon",
         subtitle: "Ingeniero de Software y Desarrollador Creativo",
         aboutDescription: "Desarrollador apasionado con experiencia en tecnologías web modernas, creando soluciones innovadoras que combinan diseño y funcionalidad.",
       },
@@ -1231,6 +1738,60 @@
       document.body.className = darkMode ? "dark" : "light";
       showNotification(darkMode);
     });
+
+    // Get DOM elements
+    const contactmeModalBackdrop = document.querySelector('.contactme-modal-backdrop');
+        const contactmeModal = document.querySelector('.contactme-modal');
+        const contactmeCloseButton = document.querySelector('.contactme-close-button');
+        const contactmeForm = document.querySelector('#contactmeForm');
+        const contactmeSubmitButton = document.querySelector('.contactme-submit-button');
+        const floatingBtn = document.querySelector('.floating-btn');
+
+        // Open modal
+        floatingBtn.addEventListener('click', () => {
+            contactmeModalBackdrop.classList.add('active');
+            // Small delay for the modal animation
+            setTimeout(() => {
+                contactmeModal.classList.add('active');
+            }, 10);
+        });
+
+        // Close modal function
+        const closeContactModal = () => {
+            contactmeModal.classList.remove('active');
+            setTimeout(() => {
+                contactmeModalBackdrop.classList.remove('active');
+            }, 300);
+        };
+
+        // Close modal events
+        contactmeCloseButton.addEventListener('click', closeContactModal);
+        contactmeModalBackdrop.addEventListener('click', (e) => {
+            if (e.target === contactmeModalBackdrop) {
+                closeContactModal();
+            }
+        });
+
+        // Escape key to close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && contactmeModalBackdrop.classList.contains('active')) {
+                closeContactModal();
+            }
+        });
+
+        // Form submission
+        contactmeForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            contactmeSubmitButton.classList.add('loading');
+            
+            // Simulate form submission
+            setTimeout(() => {
+                contactmeSubmitButton.classList.remove('loading');
+                closeContactModal();
+                // Reset form
+                contactmeForm.reset();
+            }, 2000);
+        });
   </script>
 </body>
 </html>
